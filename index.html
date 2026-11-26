@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fork Music Lab — MP3 в ноты</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#182238;font:16px system-ui}main{max-width:1200px;margin:auto;padding:32px 20px}h1{font-size:36px;margin-bottom:8px}p{line-height:1.6;color:#526078}.panel{background:white;border-radius:18px;padding:22px;margin:20px 0;box-shadow:0 4px 20px #15244608}.controls{display:flex;gap:16px;align-items:center;flex-wrap:wrap}button,.upload{border:0;border-radius:10px;background:#365cde;color:white;padding:12px 18px;font:inherit;cursor:pointer}button:disabled{opacity:.45;cursor:default}input[type=number]{width:80px;padding:10px;border:1px solid #ccd3e0;border-radius:8px}input[type=file]{max-width:100%}#scroll{overflow:auto;max-height:560px}#grid{display:block;touch-action:manipulation}audio{width:100%;margin-top:12px}progress{width:100%;margin-top:16px}#status{min-height:24px}a{color:#365cde}button:focus-visible,input:focus-visible{outline:3px solid #ec9e17;outline-offset:3px}.hint{font-size:14px}
+</style>
+<main>
+<h1>MP3 → мелодия</h1>
+<p>Загрузи запись, получи основную мелодию в нотной сетке и поправь её нажатием на клетки.</p>
+<section class="panel">
+<label for="file">Аудиофайл MP3, WAV или другой формат, поддерживаемый браузером</label><br><br>
+<input id="file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg">
+<p class="hint">Файл остаётся на устройстве. До 30 МБ и 90 секунд. Лучше всего распознаётся один голос или инструмент; аккорды, ударные и тембры автоматически не восстанавливаются.</p>
+<audio id="original" controls aria-label="Исходная запись"></audio>
+<progress id="progress" max="1" value="0" hidden></progress>
+<p id="status" role="status" aria-live="polite">Выбери файл для распознавания.</p>
+</section>
+<section class="panel">
+<div class="controls">
+<label>Темп <input id="bpm" type="number" min="40" max="240" value="120"> BPM</label>
+<button id="quantize" disabled>Применить темп к сетке</button>
+<button id="play" disabled>▶ Мелодия</button><button id="stop" disabled>■ Стоп</button>
+<button id="save" disabled>Скачать MIDI</button>
+</div>
+<p class="hint">Клетка = ¼ доли. Нажми, чтобы добавить или убрать ноту. Для точных правок с клавиатуры скачай MIDI и открой в музыкальном редакторе.</p>
+<div id="scroll"><canvas id="grid" width="800" height="720" role="img" aria-label="Сетка нот. Для правок с клавиатуры доступен экспорт MIDI."></canvas></div>
+</section>
+</main>
+<script src="mp3-import/analysis.js"></script><script src="mp3-import/app.js"></script>
+</html>
